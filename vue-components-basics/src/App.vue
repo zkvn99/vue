@@ -1,15 +1,51 @@
+<!--
+  반응형 변수, 반응형 변수 변경 함수, 라이프사이클 훅 등 setup 안에 정의할 수 있는 내용을 작성하는 공간
+  ViewModel의 개념을 작성하는 영역
+-->
 <script setup>
-
+import MyComponent from "@/components/00_components/MyComponent.vue";
+import PropsParent from "@/components/01_props/PropsParent.vue";
 </script>
 
+<!--
+  사용자 화면에 보여지는 부분을 내보낼 때 작성하는 공간
+  다른 엘리먼트를 감싸주는 역할 수행
+-->
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+<!--  <header>-->
+<!--    <h1>Vue Components Basics</h1>-->
+<!--    <h3>단일 컴포넌트 기본 구조</h3>-->
+<!--    <MyComponent />-->
+<!--  </header>-->
+    <main>
+    <h1>01. Props & Emit 기본</h1>
+    <PropsParent/>
+  </main>
 </template>
 
+<!--
+  현재 컴포넌트에 적용되는 스타일을 작성
+  각 컴포넌트 별 data-v-고유값에 적용
+  공통적인 css는 src/asserts/css 디렉토리 하위에 파일로 분리하고
+  main.js에서 import 해서 전역적으로 사용하는 것이 일반적
+-->
 <style scoped>
+header {
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+}
 
+main {
+  padding: 16px;
+}
+
+/* 하위 컴포넌트에서 사용하는 .container 공통 스타일 */
+:deep(.container) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid lightgray;
+  margin: 30px 0;
+  padding: 30px;
+}
 </style>
