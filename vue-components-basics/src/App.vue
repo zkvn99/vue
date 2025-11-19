@@ -6,6 +6,7 @@
 import MyComponent from "@/components/00_components/MyComponent.vue";
 import PropsParent from "@/components/01_props/PropsParent.vue";
 import SlotParent from "@/components/02_slot/SlotParent.vue";
+import ScopedSlotParent from "@/components/03_scoped-slot/ScopedSlotParent.vue";
 </script>
 
 <!--
@@ -23,6 +24,8 @@ import SlotParent from "@/components/02_slot/SlotParent.vue";
     <PropsParent/>
     <h1>02. Slot & NamedSlot & Dynamic Slot</h1>
     <SlotParent/>
+    <h1>03. Scoped Slot</h1>
+    <ScopedSlotParent/>
   </main>
 </template>
 
