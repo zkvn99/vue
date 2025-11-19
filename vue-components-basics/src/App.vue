@@ -7,6 +7,7 @@ import MyComponent from "@/components/00_components/MyComponent.vue";
 import PropsParent from "@/components/01_props/PropsParent.vue";
 import SlotParent from "@/components/02_slot/SlotParent.vue";
 import ScopedSlotParent from "@/components/03_scoped-slot/ScopedSlotParent.vue";
+import ProvideParent from "@/components/04_provide-inject/ProvideParent.vue";
 </script>
 
 <!--
@@ -26,6 +27,8 @@ import ScopedSlotParent from "@/components/03_scoped-slot/ScopedSlotParent.vue";
     <SlotParent/>
     <h1>03. Scoped Slot</h1>
     <ScopedSlotParent/>
+    <h1>04. provide & inject </h1>
+    <ProvideParent/>
   </main>
 </template>
 
