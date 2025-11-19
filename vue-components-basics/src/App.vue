@@ -5,6 +5,7 @@
 <script setup>
 import MyComponent from "@/components/00_components/MyComponent.vue";
 import PropsParent from "@/components/01_props/PropsParent.vue";
+import SlotParent from "@/components/02_slot/SlotParent.vue";
 </script>
 
 <!--
@@ -12,14 +13,16 @@ import PropsParent from "@/components/01_props/PropsParent.vue";
   다른 엘리먼트를 감싸주는 역할 수행
 -->
 <template>
-<!--  <header>-->
-<!--    <h1>Vue Components Basics</h1>-->
-<!--    <h3>단일 컴포넌트 기본 구조</h3>-->
-<!--    <MyComponent />-->
-<!--  </header>-->
-    <main>
+  <header>
+    <h1>Vue Components Basics</h1>
+    <h3>단일 컴포넌트 기본 구조</h3>
+    <MyComponent />
+  </header>
+  <main>
     <h1>01. Props & Emit 기본</h1>
     <PropsParent/>
+    <h1>02. Slot & NamedSlot & Dynamic Slot</h1>
+    <SlotParent/>
   </main>
 </template>
 
