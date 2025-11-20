@@ -93,14 +93,25 @@ const loadList = async () => {
 // 2) router.push 로 query 동기화
 // 3) loadList 호출
 const onSearch = () => {
-  // TODO: 구현
+  currentPage.value = 1;
+  router.push({
+    name : 'product-list',
+    query : {
+      page : currentPage.value,
+      productName : searchForm.productName || undefined,
+      categoryCode : searchForm.categoryCode || undefined
+    }
+  })
+  loadList();
 };
 
 // TODO: 초기화 버튼 클릭 시 동작
 // 1) searchForm 값 리셋
 // 2) onSearch 호출
 const onReset = () => {
-  // TODO: 구현
+  searchForm.productName = '';
+  searchForm.categoryCode = null;
+  onSearch();
 };
 
 // TODO: 페이지 변경 시 동작
@@ -108,17 +119,37 @@ const onReset = () => {
 // 2) router.push 로 query 동기화
 // 3) loadList 호출
 const onPageChange = (page) => {
-  // TODO: 구현
+  currentPage.value = page;
+  router.push({
+    name : 'product-list',
+    query : {
+      page : currentPage.value,
+      productName : searchForm.productName || undefined,
+      categoryCode : searchForm.categoryCode || undefined
+    }
+  })
+  loadList();
 };
 
 // TODO: 상세/수정/등록 이동 함수 구현
 const goDetail = (productCode) => {
+  router.push({
+    name : 'product-detail',
+    params : { productCode }
+  })
 };
 
 const goEdit = (productCode) => {
+  router.push({
+    name : 'product-edit',
+    params : { productCode }
+  })
 };
 
 const goCreate = () => {
+  router.push({
+    name : 'product-create'
+  })
 };
 
 // TODO: 컴포넌트 마운트 시 최초 목록 조회

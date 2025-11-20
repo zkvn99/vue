@@ -102,10 +102,16 @@ const productCode = Number(route.params.productCode);
 
 // TODO: 상세 조회 함수 구현
 const loadDetail = async () => {
-  // 1) loading=true
-  // 2) fetchProductDetail(productCode) 호출
-  // 3) product.value 설정
-  // 4) 에러 처리
+  loading.value = true; // api 호출 시작
+  errorMessage.value = '';
+  try {
+    const result = await fetchProductDetail(productCode);
+    product.value = result.product;
+  } catch(e) {
+    errorMessage.value = e.message || '상세 조회 중 오류가 발생했습니다'
+  } finally {
+    loading.value = false;  // api 호출 종료
+  }
 };
 
 // 목록, 수정, 삭제 동작
@@ -123,11 +129,29 @@ const goEdit = () => {
 // 3) 성공 시 메시지 + 목록 이동
 // 4) 실패 시 에러 메시지
 const onDelete = () => {
-  // ElMessageBox.confirm(...) 사용
+  ElMessageBox.confirm('정말로 이 상품을 삭제하시겠습니까?', '삭제 확인', {
+    confirmButtonText : '삭제',
+    cancelButtonText : '취소',
+    type : 'warning'
+  })
+  .then(async () => {
+    // 삭제 버튼을 눌렀을때의 동작
+    try {
+      await deleteProduct(productCode);
+      ElMessage.success('삭제되었습니다.');
+      await router.replace({name: 'product-list'});
+    } catch(e) {
+      console.log(e);
+      ElMessage.error(e.message || '삭제 중 오류가 발생했습니다.');
+    }
+  })
+  .catch(() => {
+    // 취소 버튼을 눌렀을 때의 동작
+  })
 };
 
 onMounted(() => {
-  // TODO: loadDetail 호출
+  loadDetail();
 });
 </script>
 

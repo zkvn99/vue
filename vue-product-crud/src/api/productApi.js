@@ -21,9 +21,8 @@ export async function fetchProducts({ page = 1, size = 10, categoryCode = null, 
 }
 
 export async function fetchProductDetail(productCode) {
-    // TODO:
-    // 1) api.get(`/products/${productCode}`)
-    // 2) res.data.data 반환
+  const res = await api.get(`/products/${productCode}`)
+  return res.data.data;
 }
 
 export async function createProduct(form) {
@@ -43,7 +42,6 @@ export async function updateProduct(productCode, form) {
 }
 
 export async function deleteProduct(productCode) {
-    // TODO:
-    // 1) api.delete(`/products/${productCode}`)
-    // 2) ApiResponse<Void> 처리
+    const res = await api.delete(`/products/${productCode}`);
+    return res.data;    // ApiResponse<Void> 로 반환 된 객체
 }
