@@ -48,6 +48,7 @@ const route = useRoute();
 
 const loading = ref(false);
 const errorMessage = ref('');
+
 const products = ref([]);
 const pagination = ref(null);
 
@@ -65,7 +66,26 @@ const pageSize = 10;
 // 3) products, pagination 세팅
 // 4) 에러 처리 후 finally 에서 loading false
 const loadList = async () => {
-  // TODO: 구현
+
+  loading.value = true; // api 통신 시작
+  errorMessage.value = '';
+  try {
+    const result = await fetchProducts({
+      page : currentPage.value,
+      size : pageSize,
+      categoryCode : searchForm.categoryCode,
+      productName : searchForm.productName
+    });
+
+    products.value = result.products || [];
+    pagination.value = result.pagination || null;
+  } catch(e) {
+    console.log(e);
+    errorMessage.value = e.message || '목록 조회 중 오류가 발생했습니다.';
+  } finally {
+    loading.value = false; // api 통신 종료
+  }
+
 };
 
 // TODO: 검색 버튼 클릭 시 동작
@@ -102,7 +122,9 @@ const goCreate = () => {
 };
 
 // TODO: 컴포넌트 마운트 시 최초 목록 조회
-onMounted(() => {});
+onMounted(() => {
+  loadList()
+});
 </script>
 
 <style scoped>

@@ -8,10 +8,16 @@ import api from './axios.js';
 // - deleteProduct: 상품 삭제
 
 export async function fetchProducts({ page = 1, size = 10, categoryCode = null, productName = '' } = {}) {
-    // TODO:
-    // 1) params 객체 구성
-    // 2) api.get('/products', { params })
-    // 3) ApiResponse<ProductListResponse> 에서 data 반환 (res.data.data)
+
+  const params = {
+    page, size
+  }
+
+  if(categoryCode) params.categoryCode = categoryCode;
+  if(productName) params.productName = productName;
+
+  const res = await api.get('/products', { params });
+  return res.data.data;
 }
 
 export async function fetchProductDetail(productCode) {

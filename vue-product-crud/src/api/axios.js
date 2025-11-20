@@ -6,17 +6,25 @@ import axios from 'axios';
 // 3) 에러(HTTP 4xx, 5xx) 시 적절히 throw
 
 const api = axios.create({
-    // TODO: baseURL 설정
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
+  withCredentials: false // 쿠키 x, Stateless Rest API 호출 시 설정
 });
 
-// TODO: 응답 인터셉터 등록
-// api.interceptors.response.use(
-//   (response) => {
-//     // 성공이지만 success=false인 경우 에러 처리
-//   },
-//   (error) => {
-//     // HTTP 에러 처리
-//   }
-// );
+api.interceptors.response.use(
+
+  (response) => {
+    const body = response.data;
+    if(body && body.success === false) {    // 성공이지만 success=false인 경우 에러 처리
+      const error = new Error(body.message || '요청이 실패했습니다.');
+      error.response = response;
+      throw error;
+    }
+    return response;
+  },
+  (error) => {
+    // HTTP 에러 처리
+    return Promise.reject(error);
+  }
+);
 
 export default api;
