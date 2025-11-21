@@ -57,7 +57,24 @@ const errorMessage = ref('');
 // 3) initialForm 에 값 매핑
 // 4) 성공 시 loaded=true, 실패 시 loadError 설정
 const loadDetail = async () => {
-  // TODO: 구현
+  loaded.value = false;
+  loadError.value = '';
+
+  try {
+    const result = await fetchProductDetail(productCode);
+    const product = result.product;
+    initialForm.productName = product.productName;
+    initialForm.productPrice = product.productPrice;
+    initialForm.productDescription = product.productDescription;
+    initialForm.categoryCode = product.category?.categoryCode;
+    initialForm.productStock = product.productStock;
+    initialForm.status = 'USABLE';
+    initialForm.productImageUrl = product.productImageUrl;
+    loaded.value = true;
+  } catch (e) {
+    console.log(e);
+    loadError.value = e.message || '상품 정보를 불러온느 중 오류가 발생했습니다'
+  }
 };
 
 // TODO: 수정 submit 처리

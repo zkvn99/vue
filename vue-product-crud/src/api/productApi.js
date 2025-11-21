@@ -54,11 +54,32 @@ export async function createProduct(form) {
 }
 
 export async function updateProduct(productCode, form) {
-    // TODO:
-    // 1) FormData 생성
-    // 2) productUpdateRequest (JSON) + productImg(optional) append
-    // 3) api.put(`/products/${productCode}`, formData, { headers: ... })
-    // 4) ApiResponse<Void> 처리
+  const formData = new FormData();
+  const productUpdateRequest = {
+    productName : form.productName,
+    productPrice : form.productPrice,
+    productDescription : form.productDescription,
+    categoryCode : form.categoryCode,
+    productStock : form.productStock,
+    status : form.status
+  };
+
+  formData.append(
+      'productUpdateRequest',
+      new Blob([JSON.stringify(productUpdateRequest)], {type:'application/json'})
+  )
+
+  if(form.productImgFile) {
+    formData.append('productImg', form.productImgFile);
+  }
+
+  const res = await api.put(`/products/${productCode}`, formData, {
+    headers : {
+      'Content-Type' : 'multipart/form-data'
+    }
+  });
+
+  return res.data;    // ApiResponse<Void>
 }
 
 export async function deleteProduct(productCode) {
