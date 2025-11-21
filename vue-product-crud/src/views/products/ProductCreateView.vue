@@ -48,7 +48,19 @@ const errorMessage = ref('');
 // 4) 실패 시 errorMessage 설정
 // 5) finally 에서 submitting false
 const handleSubmit = async (form) => {
-  // TODO: 구현
+  submitting.value = true;
+  errorMessage.value = '';
+
+  try {
+    const result = await createProduct(form);
+    ElMessage.success('상품이 등록 되었습니다.')
+    router.push({ name : 'product-detail', params :{ productCode : result.productCode }})
+  } catch (e) {
+    console.log(e);
+    errorMessage.value = e.message || '등록 중 오류가 발생하였습니다';
+  } finally {
+    submitting.value;
+  }
 };
 
 const goList = () => {

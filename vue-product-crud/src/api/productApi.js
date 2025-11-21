@@ -26,11 +26,31 @@ export async function fetchProductDetail(productCode) {
 }
 
 export async function createProduct(form) {
-    // TODO:
-    // 1) FormData 생성
-    // 2) productCreateRequest (JSON) + productImg(file) @RequestPart 구조에 맞게 append
-    // 3) api.post('/products', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-    // 4) res.data.data 반환 (ProductCommandResponse)
+  const formData = new FormData();
+  const productCreateRequest = {
+    productName : form.productName,
+    productPrice : form.productPrice,
+    productDescription : form.productDescription,
+    categoryCode : form.categoryCode,
+    productStock : form.productStock,
+  };
+
+  formData.append(
+      'productCreateRequest',
+      new Blob([JSON.stringify(productCreateRequest)], {type:'application/json'})
+  )
+
+  if(form.productImgFile) {
+    formData.append('productImg', form.productImgFile);
+  }
+
+  const res = await api.post('/products', formData, {
+    headers : {
+      'Content-Type' : 'multipart/form-data'
+    }
+  });
+
+  return res.data.data;
 }
 
 export async function updateProduct(productCode, form) {

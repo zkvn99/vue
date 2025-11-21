@@ -126,10 +126,28 @@ const localForm = reactive({
 // - productStock: 필수, 0 이상 숫자
 // - status: 필수 (showStatus=true 일 때)
 const rules = {
-  // 예시:
-  // productName: [
-  //   { required: true, message: '상품명을 입력하세요.', trigger: 'blur' }
-  // ]
+  productName: [
+    { required: true, message: '상품명을 입력하세요.', trigger: 'blur' },
+    { min : 1, max : 10, message: '상품명은 1~10자 내외여야 합니다.', trigger: 'blur'}
+  ],
+  productPrice: [
+    { required: true, message: '가격을 입력하세요.', trigger: 'blur' },
+    { type : 'number', min : 1, message: '가격은 0 이상이어야 합니다.', trigger: 'blur'}
+  ],
+  productDescription: [
+    { required: true, message: '상품설명을 입력하세요.', trigger: 'blur' },
+    { min : 10, max : 100, message: '상품명은 10~100자 내외여야 합니다.', trigger: 'blur'}
+  ],
+  categoryCode: [
+    { required: true, message: '카테고리를 선택하세요', trigger: 'change' },
+  ],
+  productStock: [
+    { required: true, message: '재고를 입력하세요.', trigger: 'blur' },
+    { type : 'number', min : 0, message: '재고는 0 이상이어야 합니다.', trigger: 'blur'}
+  ],
+  status: [
+    { required: true, message: '상품상태를 선택하세요', trigger: 'change' },
+  ],
 };
 
 // initialForm 이 변경될 때 localForm 으로 복사
