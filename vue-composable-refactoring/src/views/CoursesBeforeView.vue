@@ -1,56 +1,56 @@
 <script setup>
-  import { computed, onMounted, ref } from 'vue';
-  import { fetchCourses } from '@/api/courseApi';
-  import CourseListItem from '@/components/courses/CourseListItem.vue';
+import { computed, onMounted, ref } from 'vue';
+import { fetchCourses } from '@/api/courseApi';
+import CourseListItem from '@/components/courses/CourseListItem.vue';
 
-  const courses = ref([]);
-  const loading = ref(false);
-  const error = ref(null);
+const courses = ref([]);
+const loading = ref(false);
+const error = ref(null);
 
-  const searchKeyword = ref('');
-  const levelFilter = ref('all');
-  const localFavoriteIds = ref([]);
+const searchKeyword = ref('');
+const levelFilter = ref('all');
+const localFavoriteIds = ref([]);
 
-  const filteredCourses = computed(() => {
-    let list = courses.value;
+const filteredCourses = computed(() => {
+  let list = courses.value;
 
-    if (searchKeyword.value) {
-      const keyword = searchKeyword.value.toLowerCase();
-      list = list.filter(
+  if (searchKeyword.value) {
+    const keyword = searchKeyword.value.toLowerCase();
+    list = list.filter(
         (course) =>
-          course.title.toLowerCase().includes(keyword) ||
-          course.instructor.toLowerCase().includes(keyword)
-      );
-    }
+            course.title.toLowerCase().includes(keyword) ||
+            course.instructor.toLowerCase().includes(keyword)
+    );
+  }
 
-    if (levelFilter.value !== 'all') {
-      list = list.filter((course) => course.level === levelFilter.value);
-    }
+  if (levelFilter.value !== 'all') {
+    list = list.filter((course) => course.level === levelFilter.value);
+  }
 
-    return list;
-  });
+  return list;
+});
 
-  const loadCourses = async () => {
-    loading.value = true;
-    error.value = null;
-    try {
-      courses.value = await fetchCourses();
-    } catch (e) {
-      error.value = '강의 목록을 불러오지 못했습니다.';
-    } finally {
-      loading.value = false;
-    }
-  };
+const loadCourses = async () => {
+  loading.value = true;
+  error.value = null;
+  try {
+    courses.value = await fetchCourses();
+  } catch (e) {
+    error.value = '강의 목록을 불러오지 못했습니다.';
+  } finally {
+    loading.value = false;
+  }
+};
 
-  const toggleFavorite = (id) => {
-    if (localFavoriteIds.value.includes(id)) {
-      localFavoriteIds.value = localFavoriteIds.value.filter((cid) => cid !== id);
-      return;
-    }
-    localFavoriteIds.value.push(id);
-  };
+const toggleFavorite = (id) => {
+  if (localFavoriteIds.value.includes(id)) {
+    localFavoriteIds.value = localFavoriteIds.value.filter((cid) => cid !== id);
+    return;
+  }
+  localFavoriteIds.value.push(id);
+};
 
-  onMounted(loadCourses);
+onMounted(loadCourses);
 </script>
 
 <template>
