@@ -201,6 +201,16 @@ export const useAuthStore = defineStore('auth', () => {
     */
     const logout = async () => {
         // TODO: logoutApi 호출 및 상태 초기화, router 이동 로직 작성
+      try {
+        await logoutApi();
+      } catch(e) {
+        // 서버 에러여도 클라이언트 상태는 정리
+      } finally {
+        setAccessToken(null);
+        setUser(null);
+        loading.value = false;
+        router.replace('/login');
+      }
     };
 
     // 5) 외부로 공개할 state / getters / actions 반환

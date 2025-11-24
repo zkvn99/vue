@@ -5,7 +5,10 @@ export function loginApi(username, password) {
 }
 
 export function refreshApi() {
-    return api.post('/api/v1/auth/refresh')
+    return api.post('/api/v1/auth/refresh',
+        {},
+        { skipAuth : true } // request interceptor에게 "Authorization" 속성을 붙이지 않도록 알림
+    );
 }
 
 export function logoutApi() {
